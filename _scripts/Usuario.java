@@ -1,5 +1,7 @@
 package _scripts;
 
+import javax.swing.plaf.basic.BasicTreeUI.TreeCancelEditingAction;
+
 public class Usuario
 {
     private String fullName;
@@ -13,13 +15,23 @@ public class Usuario
         this.userName = userName;
         this.password = password;
         status = true;
+
+        System.out.println("Usuario "+this.userName+" creado");
     }
 
-    public void deleteUser( String deleteUserName )
+    public String getUserName()
+    {
+        return userName;
+    }
+
+    public String getPassword()
+    {
+        return password;
+    }
+
+    public void deleteUser()
     {
         status = false;
-        
-        System.out.println("Usuario "+deleteUserName+" eleminado");
     }
 
     public void editUser( String editFullName, String editUserName, String editPassword )

@@ -1,6 +1,3 @@
-//TODO: agregar que usuario y anuncio sea una base de datos, en un txt, crear clases par manejar ada uno.
-//      Crear clase system que arranca todas las claes, deberia reemplazar al codigo de main.
-
 package _scripts;
 
 import java.util.*;
@@ -8,45 +5,141 @@ import java.util.*;
 public class Pizarra {
 
     private ArrayList<Anuncio> allAnuncios;
+    private ArrayList<Usuario> allUsuarios;
+    private Usuario currentUser;
+    private boolean status;
 
     public Pizarra()
     {
-        allAnuncios = new ArrayList<Anuncio>();
+        allAnuncios =   new ArrayList<Anuncio>();
+        allUsuarios =   new ArrayList<Usuario>();
+        status =        true;
     }
 
-    public void addAnuncio()
+    public void createNewUser()
     {
         Scanner inputData = new Scanner (System.in);
-        String subjet;
-        String body;
+        String fullName;
+        String userName;
+        String password;
+        boolean result = true;
 
-        System.out.println("Enter the subjet of anuncio");
-        subjet = inputData.next();
+        do
+        {    
+            System.out.println("Enter the fullname for new user:");
+            fullName = inputData.next();
+    
+            System.out.println("Enter the username for new user:");
+            userName = inputData.next();
+            
+            System.out.println("Enter the password for new user:");
+            password = inputData.next();
+    
+            for(Usuario usuario : allUsuarios)
+            {
+                if( userName == usuario.getUserName() )
+                {
+                    result = false;
+                    break;
+                }
+            }
+        }while( !result );
 
-        System.out.println("Enter the body of anuncio");
-        body = inputData.next();
+        Usuario newUser = new Usuario( fullName, userName, password );
+        allUsuarios.add( newUser );
 
-        Anuncio newAnuncio = new Anuncio( subjet, body );
-        allAnuncios.add( newAnuncio );
+        System.out.println("Created user "+userName);
     }
 
-    public void listAllSubjet( Pizarra currentpizarra )
+    public void changeUser()
     {
-        allAnuncios.forEach( System.out::println );
-    }
+        Scanner inputData = new Scanner (System.in);
+        Usuario resultUser;
+        String userName;
+        String password;
+        boolean result = false;
 
-    public static void main(String[] args)
-    {
-        Pizarra pizarra = new Pizarra();
-        boolean isLoading = true;
-
-        System.out.println("");
-        while( isLoading )
+        do
         {
+            String compareData;
 
+            System.out.println("Enter the username to change:");
+            userName = inputData.next();
+    
+            System.out.println("Enter the password to change:");
+            password = inputData.next();
+
+            compareData = userName+password;
+
+            for(Usuario usuario : allUsuarios)
+            {
+                String tempUserData = usuario.getUserName()+usuario.getPassword();
+
+                if( compareData == tempUserData )
+                {
+                    result = true;
+                    resultUser = usuario;
+                    break;
+                }
+            }
+        }while( !result );
+
+        currentUser = resultUser;
+        System.out.println("Changed to user "+userName);
+    }
+
+    public void editCurrentUser()
+    {
+        Scanner inputData = new Scanner (System.in);
+        String changeFullName;
+        String changeUserName;
+        String changePassword;
+
+        System.out.println("Enter the fullname for change:");
+        changeFullName = inputData.next();
+
+        System.out.println("Enter the username for change:");
+        changeUserName = inputData.next();
+        
+        System.out.println("Enter the password for change:");
+        changePassword = inputData.next();
+
+        currentUser.editUser( changeFullName, changeUserName, changePassword );
+        System.out.println( "Value change for"+currentUser.getUserName() );
+    }
+
+    public void disableUser()
+    {
+        currentUser.deleteUser();
+        System.out.println( "Disable user "+currentUser.getUserName() );
+    }
+
+    public void listAllSubjet()
+    {
+        if( allAnuncios.isEmpty() )
+        {
+            System.out.println("Bandeja de anuncios vacia");
+            return;
         }
-        pizarra.addAnuncio();
 
-        pizarra.listAllSubjet( pizarra );
+        //allAnuncios.forEach( (anuncio) -> {
+        //    if( anuncio. )
+        //    anuncio.showSubject() );
+    }
+
+    public void addAnuncio( String subjet, String body )
+    {
+        //Anuncio newAnuncio = new Anuncio( subjet, body );
+        //allAnuncios.add( newAnuncio );
+    }
+
+    public void closePizarra()
+    {
+        status = false;
+    }
+
+    public boolean statusPizarra()
+    {
+        return status;
     }
 }
