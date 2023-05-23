@@ -1,4 +1,4 @@
-package _scripts;
+package _scripts.Pizarra;
 
 import java.util.*;
 

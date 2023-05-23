@@ -1,7 +1,7 @@
 //TODO: agregar que usuario y anuncio sea una base de datos, en un txt, crear clases par manejar ada uno.
 //      Crear clase system que arranca todas las claes, deberia reemplazar al codigo de main.
 
-package _scripts;
+package _scripts.Pizarra;
 
 public class MainSystem
 {

@@ -1,0 +1,91 @@
+@startuml Cartelera-DC
+hide circle
+skinparam classAttributeIconSize 0
+skinparam backgroundColor transparent
+skinparam monochrome true
+skinparam shadowing false
+
+/'
+**** Descripción de las clases ****
+'/
+Class Sistema {
+  +arrancar()
+  +Sistema()
+}
+
+Class Mensaje {
+  -texto : String
+  -fechaHora : String
+
+  +estaDestinadoA(u : Usuario) : Boolean
+  +Mensaje(texto : String, autor : Usuairo, desdestinatario : Usuario)
+  +toString() : String
+}
+
+Class Cartelera {
+  +publicarMensaje(m : Mensaje)
+  +mostrarMensajes(u : Usuario)
+  -dividirEnRenglones(s : String) : String
+  +Cartelera()
+}
+
+Class Usuario {
+  -nombre : String
+  -apellido : String
+  -username : String
+  -password : String
+  -email : String
+  -genero : Character
+
+  +coincidenUsrPwd(u : String, p : String) : Boolean
+  +toString() : String
+  +mensajeDeConexion() : String
+  +Usuario(nombre : String, apellido : String, username : String, password : String, email : String, genero : Characeter)
+}
+
+Class BaseDeUsuarios {
+  +agregarUsuario(u : Usuario)
+  +buscarUsuario(usr : String, pwd : String) : Usuario
+  +elegirUsuario(descripcion : String) : Usuario
+  +BaseDeUsuarios()
+}
+
+Class MenuDeCasosUso {
+  +procesarCasosUso(u : Usuario) : Boolean
+  +Menu(usrs : BaseDeUsuarios, buzon : Cartelera)
+}
+
+Class EntradaSalida {
+  +leerCadena(textoDelMensaje : String) : String
+  +leerDouble(textoDelMensaje : String) : Float
+  +leerInt(textoDelMensaje : String) : Integer
+  +mostrarMensaje(textoDelMensaje : String)
+  +leerPassword(textoDelMensaje : String)
+}
+
+Enum Constantes {
+}
+
+/'
+**** Relaciones entre las clases ****
+'/
+'El Sistema está "compuesto" por una cartelera, una base de usuarios y un menú de casos uso que se crean dentro del mísmo
+Sistema *--> Cartelera : cartelera
+Sistema *--> BaseDeUsuarios : usuarios
+Sistema *--> MenuDeCasosUso : menu
+
+'El Menú está "compuesto" de un buzón y una base de usaurios ya existentes.
+MenuDeCasosUso o--> Cartelera : cartelera
+MenuDeCasosUso o--> BaseDeUsuarios : usuarios
+
+'La base de usuarios está "compuesta" de usuarios
+BaseDeUsuarios "1" *--> "*" Usuario : usuarios
+
+'Una cartelera está "compuesta" de mensajes
+Cartelera "1" *--> "*" Mensaje : mensajes
+
+'Los mensajes están "compuestos" por usuarios existentes
+Mensaje o-> Usuario : autor
+Mensaje o-> Usuario : destinatario
+
+@enduml

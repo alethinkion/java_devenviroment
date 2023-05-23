@@ -1,0 +1,3 @@
+con extend se hace la herencia de clase.
+swing gui frame - jframe para java
+tute-avalos.com/static/cartelera.zip un uml de ejemplo

@@ -1,0 +1,74 @@
+@startuml temp
+hide circle
+skinparam classAttributeIconSize 0
+skinparam backgroundColor transparent
+skinparam monochrome true
+skinparam shadowing false
+
+entity Proyecto {
+    id
+    id_lider
+    name
+    total_budget
+    finance
+    init_date
+    end_date
+    description
+    date
+}
+
+entity Proyecto_Profesor {
+    id
+    id_proyect
+    id_profesor
+    date_init
+    date_end
+    date
+}
+
+entity Profesores {
+    id
+    name
+    last_name
+    dispatch
+    tel
+    is_doctor
+    date
+}
+
+entity Profesor_Doctor {
+    id
+    id_profesor
+    id_supervisor
+    date_init
+    date_ent
+    date
+}
+
+entity Publicaciones {
+    id
+    title
+    volume
+    init_page
+    end_page
+    type
+    date
+}
+
+entity Congreso {
+    id
+    id_publication
+    type
+    city
+    country
+    date_init
+    date_end
+    editorial
+    date
+}
+
+Proyecto_Profesor   }|--    Proyecto
+Proyecto            ||--    Proyecto_Profesor
+
+
+@enduml
